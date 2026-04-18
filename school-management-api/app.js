@@ -8,6 +8,18 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 
+// Root Route
+app.get('/', (req, res) => {
+  res.json({
+    message: "Welcome to School Management API",
+    status: "Active",
+    endpoints: {
+      addSchool: "POST /addSchool",
+      listSchools: "GET /listSchools?latitude={lat}&longitude={lon}"
+    }
+  });
+});
+
 // Routes
 app.use('/', schoolRoutes);
 
