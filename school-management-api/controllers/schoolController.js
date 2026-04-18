@@ -32,7 +32,7 @@ const addSchool = async (req, res) => {
     });
   } catch (err) {
     console.error('Error in addSchool:', err);
-    res.status(500).json({ error: 'Failed to add school to the database.' });
+    res.status(500).json({ error: 'Failed to add school', details: err.message });
   }
 };
 
@@ -44,13 +44,13 @@ const listSchools = async (req, res) => {
 
     const sortedSchools = schools.map(school => {
       const distance = calculateDistance(latitude, longitude, school.latitude, school.longitude);
-      return { ...school, distance_km: distance };
+      return { ...school, distance_km: parseFloat(distance.toFixed(2)) };
     }).sort((a, b) => a.distance_km - b.distance_km);
 
     res.status(200).json(sortedSchools);
   } catch (err) {
     console.error('Error in listSchools:', err);
-    res.status(500).json({ error: 'Failed to fetch schools from the database.' });
+    res.status(500).json({ error: 'Failed to fetch schools', details: err.message });
   }
 };
 
